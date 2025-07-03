@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: The user inputs a text in the input field and clicks the "Save" button
+
+    Note right of browser: The browser saves the note in the array "notes", redraws the notes, and updates the UI
+    
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+    activate server
+    Note right of server: The server processes the request and saves the note
+    server-->>browser: 201 Created
+    deactivate server
