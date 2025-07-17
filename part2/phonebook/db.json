@@ -1,19 +1,9 @@
 {
   "persons": [
     {
-      "id": "fc4b",
-      "name": "Luis Corona",
-      "number": "313-645-8734"
-    },
-    {
       "id": "5892",
       "name": "Angel Verduzco",
       "number": "313-119-9806"
-    },
-    {
-      "id": "c957",
-      "name": "Hanzeel Villa",
-      "number": "312-845-2745"
     }
   ]
 }

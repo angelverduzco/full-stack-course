@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { Filter } from './components/Filter'
 import { PersonForm } from './components/PersonFrom'
 import { Persons } from './components/Persons'
+import { Notification } from './components/Notification'
+import { Error } from './components/Error'
 import personService from './services/persons'
 
 const App = () => {
@@ -10,6 +12,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [message, setMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -30,7 +34,7 @@ const App = () => {
 
     const personFound = persons.find(person => person.name === newName)
 
-    if (personFound) {
+    if(personFound) {
       if (confirm(`${personFound.name} is already added to the phonebook, replace the old number with a new one?`)) {
 
         const personObject = {...personFound, number: newNumber}
@@ -41,6 +45,17 @@ const App = () => {
             setPersons(persons.map(person => person.id === returnedPerson.id ? returnedPerson : person))
             setNewName('')
             setNewNumber('')
+            setMessage(`${returnedPerson.name} was updated correctly`)
+            setTimeout(() => {
+              setMessage(null)
+            }, 5000)
+          })
+          .catch(error => {
+            setErrorMessage(`${personFound.name} has already been deleted from the server`)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
+            setPersons(persons.filter(person => person.id !== personFound.id))
           })
       }
     } else {
@@ -55,6 +70,13 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setMessage(`${returnedPerson.name} was added correctly`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
+        })
+        .catch(error => {
+          console.log(error)
         })
     }
   }
@@ -67,7 +89,13 @@ const App = () => {
     if (confirm(`Delete ${name}?`)) {
       personService
         .deletePerson(id)
-        .then(deletedPerson => setPersons(persons.filter(person => person.id !== deletedPerson.id))) 
+        .then(deletedPerson => {
+          setPersons(persons.filter(person => person.id !== deletedPerson.id))
+          setMessage(`${deletedPerson.name} was deleted successfully`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
+        }) 
     }
   }
 
@@ -76,6 +104,8 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={message} />
+      <Error message={errorMessage}/>
       <Filter onChange={handleFilterChange} />
       <h3>Add a new</h3>
       <PersonForm onSubmit={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={ handleNumberChange } />
