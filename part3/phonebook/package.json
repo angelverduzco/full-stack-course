@@ -1,17 +1,24 @@
 {
-  "name": "phonebook",
+  "name": "phonebook-app",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node /backend/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch index.js"
+    "dev": "node --watch /backend/index.js",
+    "build:ui": "rm -rf dist && cd frontend && npm run build && cp -r dist ../backend",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angelverduzco/phonebook-app.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "express": "^5.1.0",
-    "morgan": "^1.10.1"
-  }
+  "bugs": {
+    "url": "https://github.com/angelverduzco/phonebook-app/issues"
+  },
+  "homepage": "https://github.com/angelverduzco/phonebook-app#readme",
+  "description": ""
 }
