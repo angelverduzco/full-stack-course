@@ -11,3 +11,15 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3001/api/persons
+
+###
+PUT http://localhost:3001/api/persons/687ed9178eff3dc098c0b274
+Content-Type: application/json
+
+{
+  "name": "Josh Dun",
+  "number": "313-123-5678"
+}
+
+###
+GET http://localhost:3001/info
