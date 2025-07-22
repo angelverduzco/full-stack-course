@@ -14,8 +14,7 @@ export const PersonForm = ({
           value={newNumber}
           type='tel'
           onChange={handleNumberChange}
-          pattern="\d{3}-\d{3}-\d{4}"
-          placeholder="000-000-0000"
+          placeholder="000-0000000"
         />
       </div>
       <div>
