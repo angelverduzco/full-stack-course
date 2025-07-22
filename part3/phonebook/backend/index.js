@@ -14,7 +14,7 @@ app.get('/api/persons', (req, res, next) => {
   Person.find({}).then(result => {
     res.json(result)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.get('/info', (req, res) => {
@@ -31,7 +31,7 @@ app.get('/api/persons/:id', (req, res, next) => {
 
     res.json(person)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (req, res, next) => {
@@ -46,7 +46,7 @@ app.post('/api/persons', (req, res, next) => {
   const body = req.body
 
   if (!body.name || !body.number) {
-    return res.status(400).json({error: "Name or number missing"})
+    return res.status(400).json({ error: 'Name or number missing' })
   }
 
   const person = new Person({
@@ -57,7 +57,7 @@ app.post('/api/persons', (req, res, next) => {
   person.save().then(savedNote => {
     res.json(savedNote)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
@@ -87,12 +87,12 @@ const errorHandler = (error, req, res, next) => {
   console.error(error.message)
 
   if (error.name === 'CastError') {
-    return res.status(400).json({error: 'malformatted id'})
+    return res.status(400).json({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
-    return res.status(400).json({error: error.message})
+    return res.status(400).json({ error: error.message })
   }
 
-  res.status(500).json({error: "Internal Server Error"})
+  res.status(500).json({ error: 'Internal Server Error' })
 }
 
 app.use(errorHandler)
