@@ -1,0 +1,12 @@
+GET http://localhost:3001/api/blogs
+
+###
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Pumas ficha a Keylor Navas",
+  "author": "Fan Puma",
+  "url": "http://youtube.com",
+  "likes": 120000
+}
