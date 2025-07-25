@@ -10,3 +10,6 @@ Content-Type: application/json
   "url": "http://youtube.com",
   "likes": 120000
 }
+
+###
+DELETE http://localhost:3001/api/blogs/5a422a851b54a676234d17f7
