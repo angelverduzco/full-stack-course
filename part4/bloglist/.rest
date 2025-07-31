@@ -3,13 +3,38 @@ GET http://localhost:3001/api/blogs
 ###
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: Bearer MY_TOKEN
 
 {
   "title": "Pumas ficha a Keylor Navas",
   "author": "Fan Puma",
   "url": "http://youtube.com",
-  "likes": 120000
+  "likes": 10000
 }
 
 ###
-DELETE http://localhost:3001/api/blogs/5a422a851b54a676234d17f7
+DELETE http://localhost:3001/api/blogs/688968f844fe8ee28479c090
+Authorization: Bearer MY_TOKEN
+
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+  "username": "mago20",
+  "name": "Angel",
+  "password": ""
+}
+
+###
+GET http://localhost:3001/api/users
+
+
+###
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+  "username": "mago20",
+  "password": ""
+}
