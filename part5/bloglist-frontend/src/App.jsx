@@ -4,21 +4,21 @@ import blogService from './services/blogs'
 import loginServices from './services/login'
 import { Notification } from './components/Notification'
 import { Error } from './components/Error'
+import Togglable from './components/Togglable'
+import { BlogForm } from './components/BlogFrom'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [message, setMessage] = useState(null)
 
   useEffect(() => {
     const fetchBlogs = async () => {
       const blogs = await blogService.getAll()
+      blogs.sort((a, b) => b.likes - a.likes)
       setBlogs(blogs)
     }
 
@@ -58,15 +58,10 @@ const App = () => {
     setUser(null)
   }
 
-  const createBlog = async (event) => {
-    event.preventDefault()
-
+  const addBlog = async (blogObject) => {
     try {
-      const returnedBlog = await blogService.create({ title, author, url })
-      setAuthor('')
-      setTitle('')
-      setUrl('')
-      
+      const returnedBlog = await blogService.create(blogObject)
+   
       const newBlogs = blogs.concat(returnedBlog)
       setBlogs(newBlogs)
       
@@ -79,6 +74,38 @@ const App = () => {
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
+    }
+  }
+
+  const handleLike = async (blogObject, blogId) => {
+    try {
+      const returnedBlog = await blogService.update(blogObject, blogId)
+
+      const newBlogs = blogs.map((blog => blog.id === returnedBlog.id ? returnedBlog : blog))
+      setBlogs(newBlogs)
+    } catch (e) {
+      setErrorMessage('An error ocurred, please try again later')
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000);
+    }
+  }
+
+  const handleRemove = async blogId => {
+    try {
+      await blogService.remove(blogId)
+
+      const newBlogs = blogs.filter(blog => blogId !== blog.id)
+      setBlogs(newBlogs)
+      setMessage('Blog deleted successfully')
+      setTimeout(() => {
+        setMessage('')
+      }, 5000);
+    } catch (e) {
+      setErrorMessage('An error ocurred when trying to do this operation, please try again later')
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000);
     }
   }
 
@@ -105,17 +132,11 @@ const App = () => {
       <p>{user.name} logged in</p>
       <button onClick={handleLogout}>Logout</button>
       <h3>Create new blog</h3>
-      <form onSubmit={createBlog}>
-        <label htmlFor="title">Title</label>
-        <input id='title' type="text" onChange={({target}) => setTitle(target.value)}/>
-        <label htmlFor="author">Author</label>
-        <input id='author' type="text" onChange={({target}) => setAuthor(target.value)}/>
-        <label htmlFor="url">URL</label>
-        <input id='url' type="text" onChange={({ target }) => setUrl(target.value)} />
-        <button type='submit'>Create</button>
-      </form>
+      <Togglable buttonLabel={'New blog'}>
+        <BlogForm createBlog={addBlog}/>
+      </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} handleLike={handleLike} handleRemove={handleRemove} currentUser={user}/>
       )}
     </>
   )
