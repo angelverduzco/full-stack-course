@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 
-const Blog = ({ blog, handleLike, handleRemove, currentUser }) => { 
+const Blog = ({ blog, handleLike, handleRemove, currentUser }) => {
   const [detailsVisible, setDetailsVisible] = useState(false)
 
   const blogStyle = {
@@ -15,7 +16,7 @@ const Blog = ({ blog, handleLike, handleRemove, currentUser }) => {
   }
 
   const addLike = () => {
-    handleLike({...blog, likes: blog.likes + 1, user: blog.user.id}, blog.id)
+    handleLike({ ...blog, likes: blog.likes + 1, user: blog.user.id }, blog.id)
   }
 
   const removeBlog = () => {
@@ -30,7 +31,7 @@ const Blog = ({ blog, handleLike, handleRemove, currentUser }) => {
     <div style={blogStyle}>
       <span>{blog.title}</span>
       <span>{blog.author}</span>
-      <button onClick={() => setDetailsVisible(true)} style={{display: detailsVisible ? 'none' : ''}}>View details</button>
+      <button onClick={() => setDetailsVisible(true)} style={{ display: detailsVisible ? 'none' : '' }}>View details</button>
       {
         detailsVisible ? (
           <>
@@ -41,9 +42,16 @@ const Blog = ({ blog, handleLike, handleRemove, currentUser }) => {
             { isOwner && <button onClick={removeBlog}>Delete</button> }
           </>
         ) : null
-      } 
+      }
     </div>
-  ) 
+  )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  handleLike: PropTypes.func.isRequired,
+  handleRemove: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired
 }
 
 export default Blog

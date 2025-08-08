@@ -61,10 +61,10 @@ const App = () => {
   const addBlog = async (blogObject) => {
     try {
       const returnedBlog = await blogService.create(blogObject)
-   
+
       const newBlogs = blogs.concat(returnedBlog)
       setBlogs(newBlogs)
-      
+
       setMessage(`A new blog ${returnedBlog.title} by ${returnedBlog.author} added`)
       setTimeout(() => {
         setMessage(null)
@@ -87,7 +87,7 @@ const App = () => {
       setErrorMessage('An error ocurred, please try again later')
       setTimeout(() => {
         setErrorMessage('')
-      }, 5000);
+      }, 5000)
     }
   }
 
@@ -100,12 +100,12 @@ const App = () => {
       setMessage('Blog deleted successfully')
       setTimeout(() => {
         setMessage('')
-      }, 5000);
+      }, 5000)
     } catch (e) {
       setErrorMessage('An error ocurred when trying to do this operation, please try again later')
       setTimeout(() => {
         setErrorMessage('')
-      }, 5000);
+      }, 5000)
     }
   }
 
@@ -116,7 +116,7 @@ const App = () => {
       {message ? <Notification message={message} /> : null}
       <form onSubmit={handleLogin}>
         <label htmlFor="username">Username</label>
-        <input id='username' type="text" onChange={({target}) => setUsername(target.value)}/>
+        <input id='username' type="text" onChange={({ target }) => setUsername(target.value)}/>
         <label htmlFor="password">Password</label>
         <input id='password' type="password" onChange={({ target }) => setPassword(target.value)} />
         <button type='submit'>Login</button>
