@@ -29,16 +29,16 @@ const Blog = ({ blog, handleLike, handleRemove, currentUser }) => {
 
   return (
     <div style={blogStyle}>
-      <span>{blog.title}</span>
-      <span>{blog.author}</span>
-      <button onClick={() => setDetailsVisible(true)} style={{ display: detailsVisible ? 'none' : '' }}>View details</button>
+      <span id='blog-title'>{blog.title}</span>
+      <span id='blog-author'>{blog.author}</span>
+      <button className='btn-details' onClick={() => setDetailsVisible(true)} style={{ display: detailsVisible ? 'none' : '' }}>View details</button>
       {
         detailsVisible ? (
           <>
-            <span>{blog.url} </span>
-            <span>Likes: {blog.likes}</span> <button onClick={addLike}>Like</button>
+            <span id='blog-url'>{blog.url} </span>
+            <span id='blog-likes'>Likes: {blog.likes}</span> <button onClick={addLike}>Like</button>
             <span>{blog.user.name}</span>
-            <button onClick={() => setDetailsVisible(false)}>Hide details</button>
+            <button className='btn-details' onClick={() => setDetailsVisible(false)}>Hide details</button>
             { isOwner && <button onClick={removeBlog}>Delete</button> }
           </>
         ) : null
