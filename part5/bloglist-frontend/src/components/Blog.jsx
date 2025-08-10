@@ -28,14 +28,14 @@ const Blog = ({ blog, handleLike, handleRemove, currentUser }) => {
   const isOwner = currentUser && blog.user && (currentUser.username === blog.user.username)
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       <span id='blog-title'>{blog.title}</span>
       <span id='blog-author'>{blog.author}</span>
       <button className='btn-details' onClick={() => setDetailsVisible(true)} style={{ display: detailsVisible ? 'none' : '' }}>View details</button>
       {
         detailsVisible ? (
           <>
-            <span id='blog-url'>{blog.url} </span>
+            <span id='blog-url'>{blog.url}</span>
             <span id='blog-likes'>Likes: {blog.likes}</span> <button onClick={addLike}>Like</button>
             <span>{blog.user.name}</span>
             <button className='btn-details' onClick={() => setDetailsVisible(false)}>Hide details</button>

@@ -5,7 +5,7 @@ import loginServices from './services/login'
 import { Notification } from './components/Notification'
 import { Error } from './components/Error'
 import Togglable from './components/Togglable'
-import { BlogForm } from './components/BlogFrom'
+import { BlogForm } from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -116,9 +116,9 @@ const App = () => {
       {message ? <Notification message={message} /> : null}
       <form onSubmit={handleLogin}>
         <label htmlFor="username">Username</label>
-        <input id='username' type="text" onChange={({ target }) => setUsername(target.value)}/>
+        <input id='username' type="text" onChange={({ target }) => setUsername(target.value)} data-testid='username'/>
         <label htmlFor="password">Password</label>
-        <input id='password' type="password" onChange={({ target }) => setPassword(target.value)} />
+        <input id='password' type="password" onChange={({ target }) => setPassword(target.value)} data-testid='password'/>
         <button type='submit'>Login</button>
       </form>
     </>

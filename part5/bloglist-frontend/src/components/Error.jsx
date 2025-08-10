@@ -1,4 +1,4 @@
-export const Error = ({message}) => {
+export const Error = ({ message }) => {
   if (message === null) {
     return null
   }
@@ -16,7 +16,7 @@ export const Error = ({message}) => {
 
   return (
     <div style={errorStyles}>
-      <h3>{message}</h3>
+      <h3 className="error-message">{message}</h3>
     </div>
   )
 }
